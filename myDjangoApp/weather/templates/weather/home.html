@@ -1,0 +1,48 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #e1f5fe;
+            text-align: center;
+            padding: 50px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: auto;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌦 Weather App</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="city" placeholder="Enter city" required>
+    <button type="submit">Get Weather</button>
+</form>
+
+{% if weather.error %}
+    <p>{{ weather.error }}</p>
+{% else %}
+    {% if weather.city %}
+    <div class="card">
+        <h2>{{ weather.city }}</h2>
+        <p>Temperature: {{ weather.temp }} °C</p>
+        <p>Humidity: {{ weather.humidity }}%</p>
+        <p>Pressure: {{ weather.pressure }} hPa</p>
+        <p>Description: {{ weather.desc }}</p>
+        <img src="https://openweathermap.org/img/w/{{ weather.icon }}.png">
+    </div>
+    {% endif %}
+{% endif %}
+
+</body>
+</html>
